@@ -1,0 +1,89 @@
+{% include "header.html" %}
+
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('{{post.img_url}}')">
+  <div class="container position-relative px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="post-heading">
+          <h1>{{ post.title }}</h1>
+          <h2 class="subheading">{{ post.subtitle }}</h2>
+          <span class="meta"
+            >Posted by
+            <a href="#">{{ post.author.name }}</a>
+            on {{ post.date }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Post Content -->
+<article>
+  <div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        {{ post.body|safe }}
+        <!--TODO: Only show Edit Post button if user id is 1 (admin user) -->
+         {% if current_user.is_authenticated and current_user.id == 1 %}
+        <div class="d-flex justify-content-end mb-4">
+          <a
+            class="btn btn-primary float-right"
+            href="{{url_for('edit_post', post_id=post.id)}}"
+            >Edit Post</a>
+        </div>
+        {% endif %}
+        <!-- Comments Area -->
+        <!-- TODO: Add a CKEditor for commenting below -->
+        <div class="comment">
+          <!-- TODO: Show all the comments on a post -->
+          <ul style="list-style-type: none; padding-left: 0;">
+              {% for item in comments %}
+              <li>
+                <div class="commenterImage">
+                <img src="../static/assets/img/default-profile.jpg" />
+              </div>
+                {% if post.id == item.blog_id %}
+                <p>{{ item.author.name }}</p>
+                {{ item.content }}
+                {% endif %}
+              </li>
+              <br>
+              <hr style="width: 200px;">
+              {% endfor %}
+          </ul>
+          <ul class="commentList">
+            <li>
+              <div class="commentText"> 
+                <!-- ###################################################################################### -->
+                <!-- <p>Some comment</p> -->
+                <span class="date sub-text">comment author name</span>
+                {% if current_user.is_authenticated: %}
+                <div>
+                  <form action="{{url_for('show_post', post_id=post.id)}}" method="post">
+                    {{ form.hidden_tag() }}
+                    <p>
+
+                    <p>
+ 
+                      {{ form.comment(placeholder="Comment", class="form-control", required="required", style="width: 100%; max-width: 700px;") }}<br>
+                      {% for err in form.comment.errors %}
+                      <span style="color:red;">{{ err }}</span><br>
+                      {% endfor %}
+
+                    </p>
+                    <p>{{ form.submit(class="btn btn-primary btn-large w-50 mx-auto d-block") }}</p>
+                  </form>
+                </div>
+                {% endif %}
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+{% include "footer.html" %}

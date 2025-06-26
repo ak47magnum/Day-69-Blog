@@ -1,0 +1,59 @@
+{%include "header.html" %}
+{% from "bootstrap5/form.html" import render_form %} {% block content %} 
+
+<!-- Page Header -->
+<header
+  class="masthead"
+  style="background-image: url('../static/assets/img/register-bg.jpg')"
+>
+  <div class="container position-relative px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="page-heading container" style="width: fit-content;">
+          <h1>Register</h1>
+          
+          <span class="subheading">Start Contributing to the Blog!</span> 
+          <br>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="mb-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 col-md-8 mx-auto">
+        <!--TODO: render your registration form here--> 
+        
+        <!-- Traditional  render #################################### -->
+          <!-- <form action="{{ url_for('register') }}" method="post" style="max-width: 75%; padding-left: 145px;">
+            <div class="mb-3">
+              <input type="text" name="name" placeholder="Name" required="required" class="form-control" />
+            </div>
+            <div class="mb-3">
+              <input type="email" name="email" placeholder="Email" required="required" class="form-control" />
+            </div>
+            <div class="mb-3">
+              <input type="password" name="password" placeholder="Password" required="required" class="form-control" />
+            </div>
+            <div class="mb-3">
+              <button type="submit" class="btn btn-primary btn-lg w-50 mx-auto d-block">Sign me up.</button>
+            </div>
+          </form> -->
+
+          <!-- Basic render #################################### -->
+          <!-- {{ render_form(form)}} -->
+            
+          <div class="text-center">
+            {{ render_form(form, button_map={"submit": {"class": "btn btn-primary btn-large w-20 mx-auto d-block"}}) }}
+          </div>
+          
+          <!-- "btn btn-primary btn-large w-50 mx-auto d-block" -->
+
+      </div>
+    </div>
+  </div>
+</main>
+
+{% include "footer.html" %} {% endblock %}
