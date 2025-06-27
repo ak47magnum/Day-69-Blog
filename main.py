@@ -14,6 +14,10 @@ from forms import CreatePostForm, RegistrationForm, LoginForm, CommentForm
 from flask_migrate import Migrate
 from functools import wraps
 from flask import abort
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 
@@ -32,7 +36,7 @@ This will install the packages from the requirements.txt for this project.
 '''
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+app.config['SECRET_KEY'] = os.environ.get('FLASK_KEY')
 app.config['CKEDITOR_PKG_TYPE'] = 'basic'
 app.config['CKEDITOR_CDN'] = 'https://cdn.ckeditor.com/4.25.1-lts/basic/ckeditor.js'
 
@@ -45,7 +49,7 @@ Bootstrap5(app)
 # CREATE DATABASE
 class Base(DeclarativeBase):
     pass
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URI', "sqlite:///posts.db")
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 migrate = Migrate(app, db)
@@ -313,4 +317,4 @@ def contact():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5002)
+    app.run(debug=False, port=5002)
