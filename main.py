@@ -20,7 +20,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-
+## This is a section to test first commit on github ########################
 
 '''
 Make sure the required packages are installed: 
